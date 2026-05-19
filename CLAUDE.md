@@ -21,6 +21,13 @@
    - 좀비 커넥션, heartbeat/ping-pong, 재연결 전략
    - 메시지 유실/중복 처리 정책
 
+4. **DB 다중화 및 데이터 계층 분산**
+   - 단일 DB 인스턴스를 SPOF로 보고, 읽기/쓰기 분리(Primary-Replica) 가정의 설계
+   - 복제 지연(replication lag) 하에서 "read-your-own-writes" 같은 요구사항을 어떻게 만족시킬지
+   - 장애 조치(failover) 시 커넥션 풀/트랜잭션/재시도 전략
+   - 샤딩이 필요해지는 시점과 샤드 키 선정 기준 (학습용으로 시뮬레이션 수준)
+   - DB 다중화와 캐시(Redis)·메시지 브로커가 결합될 때의 정합성 정책
+
 ## Focus & Scope
 
 - **백엔드가 학습 대상**: 사용자는 백엔드 개발자이며, 백엔드 코드는 꼼꼼하게 검토/구현한다.
@@ -39,6 +46,7 @@
 > - `spring-boot-starter-websocket`
 > - Redis (Pub/Sub, 세션/구독 상태 공유)
 > - 메시지 브로커 (RabbitMQ/Kafka) - STOMP 외부 브로커 연동 등
+> - MySQL Replication (Primary/Replica) 또는 ProxySQL/MaxScale 류 — 읽기/쓰기 분리 학습 시
 
 ## Architecture Principles
 
