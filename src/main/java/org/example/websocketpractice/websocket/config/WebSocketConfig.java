@@ -1,6 +1,6 @@
-package org.example.websocketpractice.ws.config;
+package org.example.websocketpractice.websocket.config;
 
-import org.example.websocketpractice.ws.handler.StockWebSocketHandler;
+import org.example.websocketpractice.websocket.handler.StockWebSocketHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;

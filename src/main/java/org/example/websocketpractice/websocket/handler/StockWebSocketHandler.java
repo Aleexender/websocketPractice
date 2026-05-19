@@ -1,4 +1,4 @@
-package org.example.websocketpractice.ws.handler;
+package org.example.websocketpractice.websocket.handler;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
