@@ -3,6 +3,7 @@ package org.example.websocketpractice.websocket.handler;
 import org.example.websocketpractice.stock.exception.InvalidStockSymbolException;
 import org.example.websocketpractice.stock.query.StockPriceQuery;
 import org.example.websocketpractice.websocket.broadcast.PriceBroadcaster;
+import org.example.websocketpractice.websocket.cluster.SessionIdCodec;
 import org.example.websocketpractice.websocket.protocol.ClientCommand;
 import org.example.websocketpractice.websocket.protocol.ClientCommandParser;
 import org.example.websocketpractice.websocket.protocol.MalformedCommandException;
@@ -30,6 +31,7 @@ public class StockWebSocketHandler extends TextWebSocketHandler {
     private final PriceBroadcaster broadcaster;
     private final StockSubscriptionPolicy policy;
     private final StockPriceQuery priceQuery;
+    private final SessionIdCodec codec;
 
     public StockWebSocketHandler(
             ClientCommandParser commandParser,
@@ -37,7 +39,8 @@ public class StockWebSocketHandler extends TextWebSocketHandler {
             WebSocketSessionRegistry sessionRegistry,
             PriceBroadcaster broadcaster,
             StockSubscriptionPolicy policy,
-            StockPriceQuery priceQuery
+            StockPriceQuery priceQuery,
+            SessionIdCodec codec
     ) {
         this.commandParser = commandParser;
         this.subscriptionRegistry = subscriptionRegistry;
@@ -45,6 +48,7 @@ public class StockWebSocketHandler extends TextWebSocketHandler {
         this.broadcaster = broadcaster;
         this.policy = policy;
         this.priceQuery = priceQuery;
+        this.codec = codec;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class StockWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
-        String sessionId = session.getId();
+        String sessionId = codec.toGlobal(session.getId());
         ClientCommand command;
         try {
             command = commandParser.parse(message.getPayload());
@@ -73,7 +77,7 @@ public class StockWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
-        String sessionId = session.getId();
+        String sessionId = codec.toGlobal(session.getId());
         subscriptionRegistry.removeSession(sessionId);
         sessionRegistry.remove(sessionId);
     }

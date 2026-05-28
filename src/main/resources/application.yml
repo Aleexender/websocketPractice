@@ -5,6 +5,10 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
       - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
 
 kis:
   base-url: https://openapivts.koreainvestment.com:29443
@@ -16,3 +20,4 @@ kis:
 stock:
   ws:
     poll-interval-ms: 1000
+    mode: single

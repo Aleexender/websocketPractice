@@ -1,11 +1,13 @@
 package org.example.websocketpractice.websocket.subscription;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
+@ConditionalOnProperty(name = "stock.ws.mode", havingValue = "single", matchIfMissing = true)
 public class InMemorySubscriptionRegistry implements SubscriptionRegistry {
 
     private final ConcurrentHashMap<String, Set<String>> symbolToSessions = new ConcurrentHashMap<>();
