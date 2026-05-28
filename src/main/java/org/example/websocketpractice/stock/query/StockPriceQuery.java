@@ -21,11 +21,11 @@ public class StockPriceQuery {
     }
 
     public StockPrice currentPrice(String symbol) {
-        validate(symbol);
+        validateSymbol(symbol);
         return priceClient.fetchCurrentPrice(symbol);
     }
 
-    private void validate(String symbol) {
+    public void validateSymbol(String symbol) {
         if (symbol == null || !SYMBOL_PATTERN.matcher(symbol).matches()) {
             throw new InvalidStockSymbolException(symbol);
         }

@@ -118,6 +118,14 @@ public sealed interface StockEvent permits StockEvent.Priced, StockEvent.AlertTr
 
 ### Test
 - JUnit 5. 테스트 클래스 `*Test`, 메서드명은 `대상_결과_원인` 패턴.
+- 테스트 본문은 **BDD 형식**으로 작성한다. `// given`, `// when`, `// then` 주석으로 블록을 분리하고
+  각 블록 사이에 빈 줄을 둔다.
+  - `assertThatThrownBy(() -> ...)` 처럼 호출과 검증이 한 식에 묶이는 경우는 `// when` 을 생략하고
+    `// given` + `// then` 두 블록으로 표기한다 (억지 분리 금지).
+  - Mockito 스텁(`when(...).thenReturn(...)`)은 의미상 `given` 블록에 둔다.
+  - `mockMvc.perform(...)` 의 반환값(`ResultActions`)을 지역변수로 받아 `// when` 과 `// then` 을
+    명확히 분리한다.
+  - `@BeforeEach` / `@AfterEach` 의 공통 fixture 셋업에는 BDD 주석을 붙이지 않는다.
 - 웹소켓/분산 시나리오는 단위 테스트만으로 부족하므로, 동시성/멀티 인스턴스 가정의 통합 테스트도 점진 도입.
 
 ## Build & Run

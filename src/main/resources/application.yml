@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: websocketPractice
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+
+kis:
+  base-url: https://openapivts.koreainvestment.com:29443
+  app-key: ${KIS_APP_KEY:}
+  app-secret: ${KIS_APP_SECRET:}
+  connect-timeout: 3s
+  read-timeout: 5s
+
+stock:
+  ws:
+    poll-interval-ms: 1000

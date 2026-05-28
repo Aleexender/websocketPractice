@@ -1,0 +1,4 @@
+kis:
+  base-url: https://openapivts.koreainvestment.com:29443
+  app-key: YOUR_KIS_APP_KEY
+  app-secret: YOUR_KIS_APP_SECRET
