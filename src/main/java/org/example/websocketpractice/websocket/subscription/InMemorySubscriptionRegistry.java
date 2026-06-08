@@ -15,12 +15,12 @@ public class InMemorySubscriptionRegistry implements SubscriptionRegistry {
 
     @Override
     public void subscribe(String sessionId, String symbol) {
-        symbolToSessions.compute(symbol, (k, sessions) -> {
+        symbolToSessions.compute(symbol, (key, sessions) -> {
             Set<String> next = (sessions == null) ? ConcurrentHashMap.newKeySet() : sessions;
             next.add(sessionId);
             return next;
         });
-        sessionToSymbols.compute(sessionId, (k, symbols) -> {
+        sessionToSymbols.compute(sessionId, (key, symbols) -> {
             Set<String> next = (symbols == null) ? ConcurrentHashMap.newKeySet() : symbols;
             next.add(symbol);
             return next;
@@ -29,11 +29,11 @@ public class InMemorySubscriptionRegistry implements SubscriptionRegistry {
 
     @Override
     public void unsubscribe(String sessionId, String symbol) {
-        symbolToSessions.computeIfPresent(symbol, (k, sessions) -> {
+        symbolToSessions.computeIfPresent(symbol, (key, sessions) -> {
             sessions.remove(sessionId);
             return sessions.isEmpty() ? null : sessions;
         });
-        sessionToSymbols.computeIfPresent(sessionId, (k, symbols) -> {
+        sessionToSymbols.computeIfPresent(sessionId, (key, symbols) -> {
             symbols.remove(symbol);
             return symbols.isEmpty() ? null : symbols;
         });
@@ -46,7 +46,7 @@ public class InMemorySubscriptionRegistry implements SubscriptionRegistry {
             return;
         }
         for (String symbol : symbols) {
-            symbolToSessions.computeIfPresent(symbol, (k, sessions) -> {
+            symbolToSessions.computeIfPresent(symbol, (key, sessions) -> {
                 sessions.remove(sessionId);
                 return sessions.isEmpty() ? null : sessions;
             });
