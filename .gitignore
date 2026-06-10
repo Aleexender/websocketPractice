@@ -40,3 +40,6 @@ out/
 **/application-local.yml
 **/application-local.yaml
 **/application-local.properties
+
+### Node ###
+node_modules/
